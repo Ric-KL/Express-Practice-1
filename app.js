@@ -85,17 +85,19 @@ app.post('/car', async function(req, res) {
 
 app.delete('/car/:id', async function(req,res) {
   try {
-    const {id} = req.body;
+    const id = req.params.id
+    console.log(id);
 
-    const query = await req.bd.query(
+    const query = await req.db.query(
       `UPDATE cars
       SET deleted_flag = 1
       WHERE  id = :id`,
       {id}
     );
-
+    
     res.json(`successfully deleted car ${id}`)
   } catch (err) {
+    console.log(err);
     res.json({ success: false, message: err, data: null })
   }
 });
